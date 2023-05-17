@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,6 +30,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $phoneNumber = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastConnection = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?area $area = null;
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    #[ORM\OneToMany(mappedBy: 'staff', targetEntity: CustomerCard::class)]
+    private Collection $customerCards;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->customerCards = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -96,5 +121,101 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getLastConnection(): ?\DateTimeInterface
+    {
+        return $this->lastConnection;
+    }
+
+    public function setLastConnection(?\DateTimeInterface $lastConnection): self
+    {
+        $this->lastConnection = $lastConnection;
+
+        return $this;
+    }
+
+    public function getArea(): ?area
+    {
+        return $this->area;
+    }
+
+    public function setArea(?area $area): self
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getCreatedBy() === $this) {
+                $comment->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CustomerCard>
+     */
+    public function getCustomerCards(): Collection
+    {
+        return $this->customerCards;
+    }
+
+    public function addCustomerCard(CustomerCard $customerCard): self
+    {
+        if (!$this->customerCards->contains($customerCard)) {
+            $this->customerCards->add($customerCard);
+            $customerCard->setStaff($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomerCard(CustomerCard $customerCard): self
+    {
+        if ($this->customerCards->removeElement($customerCard)) {
+            // set the owning side to null (unless already changed)
+            if ($customerCard->getStaff() === $this) {
+                $customerCard->setStaff(null);
+            }
+        }
+
+        return $this;
     }
 }
