@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?area $area = null;
+    private ?Area $area = null;
 
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Comment::class)]
     private Collection $comments;
@@ -147,12 +147,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getArea(): ?area
+    public function getArea(): ?Area
     {
         return $this->area;
     }
 
-    public function setArea(?area $area): self
+    public function setArea(?Area $area): self
     {
         $this->area = $area;
 

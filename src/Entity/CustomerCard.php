@@ -39,14 +39,14 @@ class CustomerCard
 
     #[ORM\ManyToOne(inversedBy: 'customerCards')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?status $status = null;
+    private ?Status $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $statusUpdatedAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $statusUpdatedBy = null;
+    private ?User $statusUpdatedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'customerCards')]
     private ?MeetingPoint $meetingPoint = null;
@@ -58,7 +58,7 @@ class CustomerCard
     private ?bool $ReservationCancelled = null;
 
     #[ORM\ManyToOne(inversedBy: 'customerCards')]
-    private ?user $staff = null;
+    private ?User $staff = null;
 
     #[ORM\OneToMany(mappedBy: 'customerCard', targetEntity: CustomerReport::class)]
     private Collection $customerReports;
@@ -157,12 +157,12 @@ class CustomerCard
         return $this;
     }
 
-    public function getStatus(): ?status
+    public function getStatus(): ?Status
     {
         return $this->status;
     }
 
-    public function setStatus(?status $status): self
+    public function setStatus(?Status $status): self
     {
         $this->status = $status;
 
@@ -181,12 +181,12 @@ class CustomerCard
         return $this;
     }
 
-    public function getStatusUpdatedBy(): ?user
+    public function getStatusUpdatedBy(): ?User
     {
         return $this->statusUpdatedBy;
     }
 
-    public function setStatusUpdatedBy(?user $statusUpdatedBy): self
+    public function setStatusUpdatedBy(?User $statusUpdatedBy): self
     {
         $this->statusUpdatedBy = $statusUpdatedBy;
 
@@ -234,7 +234,7 @@ class CustomerCard
         return $this->staff;
     }
 
-    public function setStaff(?user $staff): self
+    public function setStaff(?User $staff): self
     {
         $this->staff = $staff;
 
