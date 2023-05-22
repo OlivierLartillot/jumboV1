@@ -51,11 +51,11 @@ class CustomerCard
     #[ORM\ManyToOne(inversedBy: 'customerCards')]
     private ?MeetingPoint $meetingPoint = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $meetingAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $ReservationCancelled = null;
+    private ?bool $reservationCancelled = null;
 
     #[ORM\ManyToOne(inversedBy: 'customerCards')]
     private ?User $staff = null;
@@ -63,9 +63,13 @@ class CustomerCard
     #[ORM\OneToMany(mappedBy: 'customerCard', targetEntity: CustomerReport::class)]
     private Collection $customerReports;
 
+    #[ORM\OneToMany(mappedBy: 'custommerCard', targetEntity: Transfer::class)]
+    private Collection $transfers;
+
     public function __construct()
     {
         $this->customerReports = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,12 +223,12 @@ class CustomerCard
 
     public function isReservationCancelled(): ?bool
     {
-        return $this->ReservationCancelled;
+        return $this->reservationCancelled;
     }
 
-    public function setReservationCancelled(?bool $ReservationCancelled): self
+    public function setReservationCancelled(?bool $reservationCancelled): self
     {
-        $this->ReservationCancelled = $ReservationCancelled;
+        $this->reservationCancelled = $reservationCancelled;
 
         return $this;
     }
@@ -265,6 +269,36 @@ class CustomerCard
             // set the owning side to null (unless already changed)
             if ($customerReport->getCustomerCard() === $this) {
                 $customerReport->setCustomerCard(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfer $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers->add($transfer);
+            $transfer->setCustommerCard($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfer $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getCustommerCard() === $this) {
+                $transfer->setCustommerCard(null);
             }
         }
 

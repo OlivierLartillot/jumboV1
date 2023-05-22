@@ -1,0 +1,6 @@
+<form action="{{ path('admin_traitement_csv') }}" method="post" enctype="multipart/form-data">
+    Seleccione el archivo de Excel para importar :
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="hidden" name="token" value="{{ csrf_token('add-csv') }}"/>
+    <input type="submit" value="Importar" name="submit">
+</form>
