@@ -1,0 +1,52 @@
+{# templates/admin/my-custom-page.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Attribution des Représentants au client{% endblock %}
+{% block page_actions %}
+    {# <a class="btn btn-primary" href="...">Some Action</a> #}
+{% endblock %}
+
+{% block main %}
+
+    <div class="container text-center mt-3">
+        
+
+        {% if notClient is defined %} 
+        
+            Tu as attribué tous les clients
+
+        {% else %}
+
+            <p>Il reste encore {{ countNonAttributedClients }} client(s)  à attribuer </p>
+
+            <div class="mb-3">
+                Name: <b>{{firstClient.holder}}</b> <br>
+                Date: <b>{{ firstClient.meetingAt | date('d-m-Y') }}</b>
+            </div>
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                        <div class="form-control">
+                            <i class="fa fa-user"></i> {{ form_label(form.staff) }}<br>
+                            {{ form_widget(form.staff) }}
+
+                            <small>{{ form_help(form.staff) }}</small>
+
+                            <div class="form-error">
+                                {{ form_errors(form.staff) }}
+                            </div>
+
+
+                        <div class="text-center mt-3">
+                            {{ form_row(form.validate, { 'label': 'Next' }) }}
+                        </div>
+
+                        </div>
+
+
+                {{ form_end(form) }}
+                
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}

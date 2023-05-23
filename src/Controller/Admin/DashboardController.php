@@ -100,8 +100,6 @@ class DashboardController extends AbstractDashboardController
 
         // 'add-csv' si le token est valide, on peut commencer les traitements !
         if ($this->isCsrfTokenValid('add-csv', $submittedToken)) {
-            dump('le token est bon !');
-
             // a faire dans le traitement
             //load the CSV document from a stream
             /*  $stream = fopen('csv/servicios.csv', 'r'); */
@@ -110,7 +108,7 @@ class DashboardController extends AbstractDashboardController
             $csv->setDelimiter(',');
             $csv->setHeaderOffset(0);
 
-            dump($csv->getHeader());
+            //dump($csv->getHeader());
             //build a statement
             $stmt = Statement::create() /* ->offset(10)->limit(20) */ ;
 
@@ -124,7 +122,6 @@ class DashboardController extends AbstractDashboardController
             
             // début de l'extraction des données du csv
             foreach ($records as $record) {
-                
                 // les entrées possédant ce numéro doivent être ignorée
                 if (($record['Nº Vuelo/Transporte Origen'] == "XX9999") or 
                     ($record['Nº Vuelo/Transporte Destino'] == "XX9999") or 
@@ -215,12 +212,12 @@ class DashboardController extends AbstractDashboardController
                 $transfer->setNatureTransfer($natureTransfer);
                 $transfer->setDateHour(new DateTimeImmutable($fechaHora));
                 $transfer->setFlightNumber($flightNumber);
-                $transfer->setFromStart('');
-                $transfer->setToArrival('');
-                $transfer->setPrivateCollective('');
-                $transfer->setAdultsNumber(0);
-                $transfer->setChildrenNumber(0);
-                $transfer->setBabiesNumber(0);
+                $transfer->setFromStart($record['Traslado desde']);
+                $transfer->setToArrival($record['Traslado hasta']);
+                $transfer->setPrivateCollective($record['Tipo traslado']);
+                $transfer->setAdultsNumber($adultsNumber);  
+                $transfer->setChildrenNumber($childrenNumber);
+                $transfer->setBabiesNumber($babiesNumber);
                 if ($transferResult == NULL) {
                     $transfer->setCustomerCard($customerCard);
                     $manager->persist($transfer);
@@ -229,18 +226,11 @@ class DashboardController extends AbstractDashboardController
                 }
                 
                 $manager->flush();
-                dd('stop'); 
-                
-                
                 
                 // TODO : regarder si un enregistrement a été supprimé
             
 
-            
-            
-            
-            
-            
+
             return $this->redirectToRoute('admin');
         }
         
@@ -250,7 +240,6 @@ class DashboardController extends AbstractDashboardController
         
 
     }
-
 
 
     public function configureDashboard(): Dashboard
@@ -266,5 +255,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Areas', 'fa fa-map', Area::class);
         yield MenuItem::linkToCrud('Meeting Points', 'fa fa-map-marker', MeetingPoint::class);
         yield MenuItem::linkToCrud('Status', 'fa fa-check-square-o', Status::class);
+        yield MenuItem::linkToRoute('Attributions Rep', 'fa fa-users', 'app_admin_ivan');
     }
 }

@@ -77,99 +77,100 @@ class CustomerCard
         return $this->id;
     }
 
+    
     public function getReservationNumber(): ?string
     {
         return $this->reservationNumber;
     }
-
+    
     public function setReservationNumber(string $reservationNumber): self
     {
         $this->reservationNumber = $reservationNumber;
-
+        
         return $this;
     }
-
+    
     public function getJumboNumber(): ?string
     {
         return $this->jumboNumber;
     }
-
+    
     public function setJumboNumber(string $jumboNumber): self
     {
         $this->jumboNumber = $jumboNumber;
-
+        
         return $this;
     }
-
+    
     public function getHolder(): ?string
     {
         return $this->holder;
     }
-
+    
     public function setHolder(string $holder): self
     {
         $this->holder = $holder;
-
+        
         return $this;
     }
-
+    
     public function getAgency(): ?string
     {
         return $this->agency;
     }
-
+    
     public function setAgency(string $agency): self
     {
         $this->agency = $agency;
-
+        
         return $this;
     }
-
+    
     public function getAdultsNumber(): ?int
     {
         return $this->adultsNumber;
     }
-
+    
     public function setAdultsNumber(?int $adultsNumber): self
     {
         $this->adultsNumber = $adultsNumber;
-
+        
         return $this;
     }
-
+    
     public function getChildrenNumber(): ?int
     {
         return $this->childrenNumber;
     }
-
+    
     public function setChildrenNumber(?int $childrenNumber): self
     {
         $this->childrenNumber = $childrenNumber;
-
+        
         return $this;
     }
-
+    
     public function getBabiesNumber(): ?int
     {
         return $this->babiesNumber;
     }
-
+    
     public function setBabiesNumber(?int $babiesNumber): self
     {
         $this->babiesNumber = $babiesNumber;
-
+        
         return $this;
     }
-
+    
     public function getStatus(): ?Status
     {
         return $this->status;
     }
-
+    
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
-
+        
         return $this;
     }
 
@@ -181,19 +182,19 @@ class CustomerCard
     public function setStatusUpdatedAt(\DateTimeInterface $statusUpdatedAt): self
     {
         $this->statusUpdatedAt = $statusUpdatedAt;
-
+        
         return $this;
     }
-
+    
     public function getStatusUpdatedBy(): ?User
     {
         return $this->statusUpdatedBy;
     }
-
+    
     public function setStatusUpdatedBy(?User $statusUpdatedBy): self
     {
         $this->statusUpdatedBy = $statusUpdatedBy;
-
+        
         return $this;
     }
 
@@ -201,23 +202,23 @@ class CustomerCard
     {
         return $this->meetingPoint;
     }
-
+    
     public function setMeetingPoint(?MeetingPoint $meetingPoint): self
     {
         $this->meetingPoint = $meetingPoint;
-
+        
         return $this;
     }
-
+    
     public function getMeetingAt(): ?\DateTimeImmutable
     {
         return $this->meetingAt;
     }
-
+    
     public function setMeetingAt(\DateTimeImmutable $meetingAt): self
     {
         $this->meetingAt = $meetingAt;
-
+        
         return $this;
     }
 
@@ -225,11 +226,11 @@ class CustomerCard
     {
         return $this->reservationCancelled;
     }
-
+    
     public function setReservationCancelled(?bool $reservationCancelled): self
     {
         $this->reservationCancelled = $reservationCancelled;
-
+        
         return $this;
     }
 
@@ -237,14 +238,14 @@ class CustomerCard
     {
         return $this->staff;
     }
-
+    
     public function setStaff(?User $staff): self
     {
         $this->staff = $staff;
-
+        
         return $this;
     }
-
+    
     /**
      * @return Collection<int, CustomerReport>
      */
@@ -252,17 +253,17 @@ class CustomerCard
     {
         return $this->customerReports;
     }
-
+    
     public function addCustomerReport(CustomerReport $customerReport): self
     {
         if (!$this->customerReports->contains($customerReport)) {
             $this->customerReports->add($customerReport);
             $customerReport->setCustomerCard($this);
         }
-
+        
         return $this;
     }
-
+    
     public function removeCustomerReport(CustomerReport $customerReport): self
     {
         if ($this->customerReports->removeElement($customerReport)) {
@@ -271,10 +272,10 @@ class CustomerCard
                 $customerReport->setCustomerCard(null);
             }
         }
-
+        
         return $this;
     }
-
+    
     /**
      * @return Collection<int, Transfer>
      */
@@ -282,26 +283,31 @@ class CustomerCard
     {
         return $this->transfers;
     }
-
+    
     public function addTransfer(Transfer $transfer): self
     {
         if (!$this->transfers->contains($transfer)) {
             $this->transfers->add($transfer);
-            $transfer->setCustommerCard($this);
+            $transfer->setCustomerCard($this);
         }
-
+        
         return $this;
     }
-
+    
     public function removeTransfer(Transfer $transfer): self
     {
         if ($this->transfers->removeElement($transfer)) {
             // set the owning side to null (unless already changed)
-            if ($transfer->getCustommerCard() === $this) {
-                $transfer->setCustommerCard(null);
+            if ($transfer->getCustomerCard() === $this) {
+                $transfer->setCustomerCard(null);
             }
         }
-
+        
         return $this;
+    }
+
+    public function __toString()
+    {
+        return 'Nombre: ' . $this->getHolder() . 'Reservation: ' . $this->getReservationNumber() . ' - Jumbo: ' . $this->getJumboNumber();
     }
 }
