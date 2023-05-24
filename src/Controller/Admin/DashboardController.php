@@ -13,6 +13,7 @@ use App\Repository\MeetingPointRepository;
 use App\Repository\StatusRepository;
 use App\Repository\TransferRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -23,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+use Symfony\Component\Validator\Constraints\Date;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -166,9 +168,9 @@ class DashboardController extends AbstractDashboardController
                     // meetind At, le lendemain de l'arrivée
                     if ($record['Fecha/Hora Origen']) {
                         $dateTime = explode(" ", $record['Fecha/Hora Origen']);
-                        $date = $dateTime[0];
+                        $date = new DateTime($dateTime[0]);
                         $hour = '00:01';
-                        $meetingAt = new DateTimeImmutable($date . $hour);
+                        $meetingAt = new DateTimeImmutable($date->format('Y-d-m') . $hour);
                         $customerCard->setMeetingAt($meetingAt);
                     }
                     $customerCard->setReservationCancelled(0);

@@ -42,8 +42,6 @@ class IvanController extends AbstractController
             $date = $dateEnSession;
             $date = new DateTimeImmutable($date);
             $day = $date->format('Y-m-d');
-
-
         }
         else if (($queryDate == NULL) and ($session->get('date') != null)) {
             $dateEnSession = $session->get('date');
