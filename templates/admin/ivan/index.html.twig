@@ -23,7 +23,9 @@
                 Name: <b>{{firstClient.holder}}</b> <br>
                 Date: <b>{{ firstClient.meetingAt | date('d-m-Y') }}</b>
             </div>
-                {{ form_start(form) }}
+
+            {{ form(form) }}
+{#                 {{ form_start(form) }}
                     {{ form_errors(form) }}
 
                         <div class="form-control">
@@ -44,9 +46,10 @@
                         </div>
 
 
-                {{ form_end(form) }}
+                {{ form_end(form) }} #}
                 
             </p>
         {% endif %}
     </div>
+
 {% endblock %}
