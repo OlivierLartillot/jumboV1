@@ -44,6 +44,10 @@ class Transfer
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $babiesNumber = null;
 
+    #[ORM\ManyToOne(inversedBy: 'transfers')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CustomerCard $customerCard = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +169,18 @@ class Transfer
     public function setBabiesNumber(?int $babiesNumber): self
     {
         $this->babiesNumber = $babiesNumber;
+
+        return $this;
+    }
+
+    public function getCustomerCard(): ?CustomerCard
+    {
+        return $this->customerCard;
+    }
+
+    public function setCustomerCard(?CustomerCard $customerCard): self
+    {
+        $this->customerCard = $customerCard;
 
         return $this;
     }
