@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CustomerCard;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,20 +40,51 @@ class CustomerCardRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return CustomerCard[] Returns an array of CustomerCard objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return CustomerCard[] Returns an array of CustomerCard objects by staff and meeting date (day)
+     */
+    public function findByStaffAndMeetingDate($staff, $dateTimeImmutable): array
+    {
+
+
+        $dateTime = $dateTimeImmutable->format('Y-m-d');
+
+  
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.staff = :staff')
+            ->andWhere('c.meetingAt >= :date_start')
+            ->andWhere('c.meetingAt <= :date_end')
+            ->setParameter('staff', $staff)
+            ->setParameter('date_start', $dateTimeImmutable->format($dateTime . ' 00:00:00'))
+            ->setParameter('date_end',   $dateTimeImmutable->format($dateTime . ' 23:59:59'))
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return CustomerCard[] Returns an array of CustomerCard objects by meeting date (day) and 
+     */
+    public function findByMeetingDate($dateTimeImmutable): array
+    {
+
+
+        $dateTime = $dateTimeImmutable->format('Y-m-d');
+
+  
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.meetingAt >= :date_start')
+            ->andWhere('c.meetingAt <= :date_end')
+            ->andWhere('c.meetingPoint is not null')
+            ->setParameter('date_start', $dateTimeImmutable->format($dateTime . ' 00:00:00'))
+            ->setParameter('date_end',   $dateTimeImmutable->format($dateTime . ' 23:59:59'))
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    public function findOneBySomeField($value): ?CustomerCard
 //    {

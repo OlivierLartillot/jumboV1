@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    <div class="example-wrapper">
+        <form action={{ path('app_admin_ivan_fiche_par_date', {user: user.id}) }} method="GET">
+            <input name="date" type="date" value="{{date | date('Y-m-d') }}">
+            <input type="submit">
+        </form>
+
+    </div>
+
+    <div class="container">
+    <h1 class="text-center">{{ user }} le {{date | date('d m Y') }}</h1>
+
+    <a href="{{path('app_admin_ivan_replist')}}">Liste des Rep</a>
+
+    <div class="mt-5">
+        <form action="" method="POST">
+            <table class="table table-striped border shadow">
+                <thead>
+                    <tr>
+                        <th scope="col">Hotel</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Place</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                        {% for client in attributionClientsByRepAndDate %}
+                            <tr>
+                                <td>
+                                {% for infosTransfer in client.transfers %}
+                                    {{ infosTransfer.toArrival}}
+                                {% endfor %}
+                                </td>
+                                <td>{{ client.holder }}</td> 
+                                <td> <input type="time" value="{{ client.getMeetingAtTime}}" name="hour_{{ client.id }}"/></td> 
+                                <td>
+                                    <select name="meetingPoint_{{ client.id }}" id="pet-select">
+                                        {% for meetingPoint in meetingPoints %}
+
+                                            {% if  client.meetingPoint is not null %}
+                                                <option value="{{meetingPoint.id}}" {{ meetingPoint.id == client.meetingPoint.id ? "selected" : ""}}  >{{meetingPoint.name}}</option>
+                                            {% else %}
+                                                <option value="{{meetingPoint.id}}" >{{meetingPoint.name}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </td> 
+                            </tr>
+                    
+                        {% endfor %}
+
+                </tbody>
+            </table>
+
+            <input type="submit">
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+    </div>
+
+{% endblock %}

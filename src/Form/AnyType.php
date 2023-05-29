@@ -2,26 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RepAttributionType extends AbstractType
+class AnyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('staff', EntityType::class, [
-            'placeholder' => 'Choose a User',
-            'class' => User::class,
-            'autocomplete' =>true
-        ] )
-        ->add('validate', SubmitType::class, [
-            'attr' => ['class' => 'btn btn-primary'],
+        ->add('Users', ChoiceType::class, [
+            'choices' => [
+                'Choose a portion size' => '',
+                'small' => 's',
+                'medium' => 'm',
+                'large' => 'l',
+                'extra large' => 'xl',
+                'all you can eat' => '∞',
+            ],
+                'autocomplete' => true,
         ])
         ;
     }

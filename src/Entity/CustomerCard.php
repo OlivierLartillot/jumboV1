@@ -63,7 +63,7 @@ class CustomerCard
     #[ORM\OneToMany(mappedBy: 'customerCard', targetEntity: CustomerReport::class)]
     private Collection $customerReports;
 
-    #[ORM\OneToMany(mappedBy: 'custommerCard', targetEntity: Transfer::class)]
+    #[ORM\OneToMany(mappedBy: 'customerCard', targetEntity: Transfer::class)]
     private Collection $transfers;
 
     public function __construct()
@@ -305,6 +305,16 @@ class CustomerCard
         
         return $this;
     }
+
+    public function getMeetingAtDate() {
+        return $this->meetingAt->format('d-m-Y');
+    }
+
+    public function getMeetingAtTime() {
+        return $this->meetingAt->format('H:i');
+    }
+
+
 
     public function __toString()
     {

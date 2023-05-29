@@ -2,3 +2,14 @@ body {
     background-color: #efece9;
 }
 
+.text-white {
+    color: white;
+}
+
+.text-danger {
+    color: crimson;
+}
+
+.text-success {
+    color: rgb(20, 220, 63);
+}
