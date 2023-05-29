@@ -17,7 +17,7 @@
 
 
     <div class="container">
-    <a href="{{ path('admin') }}" class="btn btn-secondary my-3">Back to admin Admin</a>
+    <a href="{{ path('admin') }}" class="btn btn-secondary my-3">Back to Admin</a>
     <a href="{{ path('app_admin_stickers_par_date') }}" class="btn btn-secondary my-3">Stickers</a>
         <div class="row">
             {% for  key,reps in clientsListByRepAndDate %}
@@ -33,14 +33,11 @@
                                 
                                     {% set currentStaff = "" %}
                                     {% for client in reps %}   
-
-
-
                                         <p class="card-text {{(client.getMeetingAtTime == '00:01') ? "text-danger" : "text-success"}}">
                                             {% for infosTransfer in client.transfers %}
                                                 <strong>{{ infosTransfer.toArrival}}</strong><br/>
-                                                <strong>Pax:</strong> {{ infosTransfer.adultsNumber + infosTransfer.childrenNumber + infosTransfer.babiesNumber}}
-                                                (A:{{ infosTransfer.adultsNumber }},E: {{ infosTransfer.childrenNumber}}, B: {{ infosTransfer.babiesNumber}})<br/>
+                                                <strong>Pax:</strong> A:{{ infosTransfer.adultsNumber }}, N: {{ infosTransfer.childrenNumber}}, B: {{ infosTransfer.babiesNumber}}<br/>{# {{ infosTransfer.adultsNumber + infosTransfer.childrenNumber + infosTransfer.babiesNumber}} #}
+                                    
                                             {% endfor %}
                                             {{ client.holder }} <br> 
                                             client meeting at: {{ client.getMeetingAtTime }} - {{ client.meetingPoint != null ? client.meetingPoint.name  : "" }}

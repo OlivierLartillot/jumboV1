@@ -18,7 +18,7 @@
     <div class="container">
     <h1 class="text-center">{{ user }} le {{date | date('d m Y') }}</h1>
 
-    <a href="{{path('app_admin_ivan_replist')}}">Liste des Rep</a>
+    <a href="{{path('app_admin_ivan_replist')}}" class="btn btn-secondary my-3">Liste des Rep</a>
 
     <div class="mt-5">
         <form action="" method="POST">
@@ -31,7 +31,6 @@
                         <th scope="col">Place</th>
                     </tr>
                 </thead>
-
                 <tbody>
                         {% for client in attributionClientsByRepAndDate %}
                             <tr>
