@@ -28,8 +28,14 @@
             <p>Il reste encore {{ countNonAttributedClients }} client(s)  à attribuer </p>
 
             <div class="mb-3">
+            Hôtel:
+                        {% for infosTransfer in firstClient.transfers %}
+                            <strong>{{ infosTransfer.toArrival}}</strong>
+                        {% endfor %} <br>
 
-                Name: <b>{{firstClient.holder}}</b> <br>
+                   
+
+                Name: <b>{{ firstClient.holder }}</b> <br>
                 Date: <b>{{ firstClient.meetingAt | date('d-m-Y') }}</b>
             </div>
 
