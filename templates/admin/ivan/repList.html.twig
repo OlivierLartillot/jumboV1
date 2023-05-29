@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    <div class="example-wrapper">
+        <form action={{ path('app_admin_ivan_replist') }} method="GET">
+            <input name="date" type="date" value="{{date | date('Y-m-d') }}">
+            <input type="submit">
+        </form>
+
+    </div>
+
+
+    <div class="container">
+    <a href="{{ path('admin') }}" class="btn btn-secondary my-3">Back to admin Admin</a>
+    <a href="{{ path('app_admin_stickers_par_date') }}" class="btn btn-secondary my-3">Stickers</a>
+        <div class="row">
+            {% for  key,reps in clientsListByRepAndDate %}
+
+                    <div class="col-sm-5 mb-3 mb-sm-0">
+                        <div class="card">
+                            <div class="card-body">
+                                {% if (reps is empty) %} 
+                                    <h5 class="card-title">{{ key }} </h5>
+                                        <p class="card-text">Ce rep n'a pas de client attribué ce jour.</p>
+                                {% else %} 
+                                    <h5 class="card-title">{{ key }}</h5>
+                                
+                                    {% set currentStaff = "" %}
+                                    {% for client in reps %}   
+
+
+
+                                        <p class="card-text {{(client.getMeetingAtTime == '00:01') ? "text-danger" : "text-success"}}">
+                                            {% for infosTransfer in client.transfers %}
+                                                <strong>{{ infosTransfer.toArrival}}</strong><br/>
+                                                <strong>Pax:</strong> {{ infosTransfer.adultsNumber + infosTransfer.childrenNumber + infosTransfer.babiesNumber}}
+                                                (A:{{ infosTransfer.adultsNumber }},E: {{ infosTransfer.childrenNumber}}, B: {{ infosTransfer.babiesNumber}})<br/>
+                                            {% endfor %}
+                                            {{ client.holder }} <br> 
+                                            client meeting at: {{ client.getMeetingAtTime }} - {{ client.meetingPoint != null ? client.meetingPoint.name  : "" }}
+                                            {% set currentStaff = client.staff.id %}
+                                        </p>
+                                        <hr>
+                                    {% endfor %}
+                                <a href="{{ path('app_admin_ivan_fiche_par_date', {user: currentStaff })}}" class="btn btn-primary">Modifier Heure / Representant</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div> 
+    </div>
+
+{% endblock %}

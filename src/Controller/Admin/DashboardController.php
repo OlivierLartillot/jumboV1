@@ -239,8 +239,6 @@ class DashboardController extends AbstractDashboardController
         else {
             dd('erreur de token');
         }
-        
-
     }
 
 
@@ -258,5 +256,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Meeting Points', 'fa fa-map-marker', MeetingPoint::class);
         yield MenuItem::linkToCrud('Status', 'fa fa-check-square-o', Status::class);
         yield MenuItem::linkToRoute('Attributions Rep', 'fa fa-users', 'app_admin_ivan');
+        yield MenuItem::linkToRoute('Stickers', 'fa fa-users', 'app_admin_stickers_par_date');
     }
 }

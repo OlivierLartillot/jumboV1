@@ -8,14 +8,20 @@
 </style>
 
     <div class="example-wrapper">
+
         <form action={{ path('app_admin_ivan') }} method="GET">
             <input name="date" type="date" value="{{date | date('Y-m-d') }}">
             <input type="submit">
         </form>
 
+        <a href="{{ path('app_admin_ivan_replist') }}" class="btn btn-secondary my-3">Liste des Rep</a>
+
+
+
+
     {% if notClient is defined %} 
         
-            Tu as attribué tous les clients
+          <p>Pas ou plus de client à attribuer pour cette date.</p>
 
         {% else %}
 
@@ -26,7 +32,6 @@
                 Name: <b>{{firstClient.holder}}</b> <br>
                 Date: <b>{{ firstClient.meetingAt | date('d-m-Y') }}</b>
             </div>
-
 
         {{ form(form) }}
     {% endif %}
