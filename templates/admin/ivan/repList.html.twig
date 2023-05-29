@@ -8,6 +8,9 @@
 </style>
 
     <div class="example-wrapper">
+
+        <h3 class="my-5">Llegada del {{date | date('d-m-Y') }}, briefing del {{date | date_modify("+1 day") | date('d-m-Y') }}</h3>
+
         <form action={{ path('app_admin_ivan_replist') }} method="GET">
             <input name="date" type="date" value="{{date | date('Y-m-d') }}">
             <input type="submit">

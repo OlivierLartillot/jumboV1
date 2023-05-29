@@ -69,9 +69,7 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
 
-        return $this->render('admin/index.html.twig', [
-            'testParam' => "Ceci est une phrase d'essai passée en parametre dans le controleur dashboard"
-        ]);
+        return $this->render('admin/index.html.twig', []);
     }
 
     #[Route('/admin/traitement_csv', name: 'admin_traitement_csv')]
@@ -251,11 +249,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
-        yield MenuItem::linkToCrud('Areas', 'fa fa-map', Area::class);
-        yield MenuItem::linkToCrud('Meeting Points', 'fa fa-map-marker', MeetingPoint::class);
-        yield MenuItem::linkToCrud('Status', 'fa fa-check-square-o', Status::class);
+        yield MenuItem::linkToCrud('Rep', 'fa fa-users', User::class);
+        yield MenuItem::linkToCrud('Zonas', 'fa fa-map', Area::class);
+        yield MenuItem::linkToCrud('Lugar Briefing', 'fa fa-map-marker', MeetingPoint::class);
+        yield MenuItem::linkToCrud('Estado Cliente', 'fa fa-check-square-o', Status::class);
         yield MenuItem::linkToRoute('Attributions Rep', 'fa fa-users', 'app_admin_ivan');
-        yield MenuItem::linkToRoute('Stickers', 'fa fa-users', 'app_admin_stickers_par_date');
+        yield MenuItem::linkToRoute('Etiquetas', 'fa fa-users', 'app_admin_stickers_par_date');
     }
 }

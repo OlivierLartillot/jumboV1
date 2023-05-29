@@ -3,11 +3,11 @@
 
 
 {% block main %}
-    <h1>Bienvenue dans l'administartion de Jumbo</h1>
+    {# <h1>Jumbo</h1> #}
 
 
-    // si user est un admin qui a les droits d'envoyer le csv  <br>
-    // envoyer le formulaire d'envoi<br>
+   {#  si user est un admin qui a les droits d'envoyer le csv  <br>
+    envoyer le formulaire d'envoi<br> #}
     <h2>Envoyer le csv</h2>
     {% include 'forms/upload_csv.html.twig' %}
 
@@ -16,10 +16,10 @@
         {{paramtraitement}}
     {% endif %}
 
-    {% if app.user %} 
+{#     {% if app.user %} 
         user connecté 
     {% else %} 
         user non connecté. <b>{{ testParam }}</b>
-    {% endif %}
+    {% endif %} #}
 
 {% endblock %}
