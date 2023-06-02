@@ -15,9 +15,6 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
-<<<<<<< HEAD
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
-=======
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class => ['all' => true],
->>>>>>> 61b16d3a96fbbe8d2f3e88f749d7bce0e8a5b79f
 ];
