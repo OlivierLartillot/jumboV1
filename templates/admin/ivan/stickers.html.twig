@@ -62,7 +62,6 @@
                 <input id="impression" name="impression" type="button" onclick="imprimer_page()" value="Imprimer cette page" />
             </form>
         </div>
-
         
         <div class="labels-container mt-5">
             {% for meetingInfos in meetings %}
@@ -74,10 +73,19 @@
                         {% endfor %}
                     </p>
                     <p><strong>Reunion de Bienvenue &amp; d'Information</strong></p>
+                    <div class="row">
+                        <div class="col-6">
                     <p><strong>Jour:</strong> Demain</p>
                     <p><strong>Lieu de rencontre:</strong> {{ (meetingInfos.meetingPoint.name is defined) ? meetingInfos.meetingPoint.name : ""}}</p>
-                    <p><strong>Votre représentant:</strong> {{ meetingInfos.staff }}</p>
-                    <p><strong>Whatsapp:</strong> +1 809 723 0945</p>
+
+
+                            <p><strong>Votre représentant:</strong> {{ meetingInfos.staff }}</p>
+                            <p><strong>Whatsapp:</strong> +1 809 723 0945</p>
+                        </div>
+                        <div class="col-6">
+                        {% if meetingInfos.staff.phoneNumber is defined and  meetingInfos.staff.phoneNumber != null %}    <img src="{{ qr_code_url('wa.me/' ~ meetingInfos.staff.phoneNumber) }}" /> {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
             <!-- Ajoutez les autres étiquettes ici -->
