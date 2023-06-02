@@ -56,17 +56,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'staff', targetEntity: CustomerCard::class)]
     private Collection $customerCards;
 
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Any::class)]
-    private Collection $anies;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $qrCode = null;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->customerCards = new ArrayCollection();
-        $this->anies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,48 +247,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->getUserIdentifier();
     }
-
-    /**
-     * @return Collection<int, Any>
-     */
-    public function getAnies(): Collection
-    {
-        return $this->anies;
-    }
-
-    public function addAny(Any $any): self
-    {
-        if (!$this->anies->contains($any)) {
-            $this->anies->add($any);
-            $any->setUsers($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAny(Any $any): self
-    {
-        if ($this->anies->removeElement($any)) {
-            // set the owning side to null (unless already changed)
-            if ($any->getUsers() === $this) {
-                $any->setUsers(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getQrCode(): ?string
-    {
-        return $this->qrCode;
-    }
-
-    public function setQrCode(?string $qrCode): self
-    {
-        $this->qrCode = $qrCode;
-
-        return $this;
-    }
-
 
 }
