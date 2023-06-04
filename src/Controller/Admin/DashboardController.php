@@ -105,7 +105,7 @@ class DashboardController extends AbstractDashboardController
             /*  $stream = fopen('csv/servicios.csv', 'r'); */
             $csv = Reader::createFromStream(fopen($_FILES["fileToUpload"]["tmp_name"], 'r+'));
             //$csv = Reader::createFromPath($_FILES["fileToUpload"]["tmp_name"], 'r');
-            $csv->setDelimiter(',');
+            $csv->setDelimiter('|');
             $csv->setHeaderOffset(0);
 
             //dump($csv->getHeader());
@@ -130,7 +130,7 @@ class DashboardController extends AbstractDashboardController
                 }
 
                 // extraction de jumboNumber et reservationNumber car ils se trouvent dans la meme case dans le csv 
-                $numbers = explode(", ", $record['VARCHAR(24)']);
+                $numbers = explode(", ", $record['Localizadores']);
                 $jumboNumber = $numbers[0];
                 $reservationNumber = $numbers[1];
                 
